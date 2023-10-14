@@ -4,15 +4,13 @@ import sys
 import argparse
 import time
 
-
-
 def main():
     parser = argparse.ArgumentParser(prog="get-all-customers.py", description="Query ProductBoard for a list of all customers")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
     args = parser.parse_args()
 
-    req_url = 'https://api.productboard.com/companies?page'
+    req_url = 'https://api.productboard.com/companies'
     headers = {
         "X-Version": "1",
         "Authorization": "Bearer " f"{args.token}"
@@ -22,7 +20,8 @@ def main():
     # Initial retrieval of customers
     response = requests.request("GET", req_url, headers=headers)
     if response.status_code == 200:
-        print(f"Companies list success {response}")
+        timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
+        print(timestamp + f"Companies list success {response}")
         response = response.json()
         customers_dict = response['data']
         next_url = response['links']['next']
@@ -34,7 +33,8 @@ def main():
             req_url = next_url
             response = response = requests.request("GET", req_url, headers=headers)
             if response.status_code == 200:
-                print(f"Companies list success {response}")
+                timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
+                print(timestamp + f"Companies list success {response}")
                 response = response.json()
                 customers_dict = response['data']
                 next_url = response['links']['next']
