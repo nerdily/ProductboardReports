@@ -21,7 +21,7 @@ def main():
     response = requests.request("GET", req_url, headers=headers)
     if response.status_code == 200:
         timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
-        print(timestamp + f"Companies list success {response}")
+        print(timestamp + f": Companies list success {response}")
         response = response.json()
         customers_dict = response['data']
         next_url = response['links']['next']
@@ -34,7 +34,7 @@ def main():
             response = response = requests.request("GET", req_url, headers=headers)
             if response.status_code == 200:
                 timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
-                print(timestamp + f"Companies list success {response}")
+                print(timestamp + f": Companies list success {response}")
                 response = response.json()
                 customers_dict = response['data']
                 next_url = response['links']['next']
