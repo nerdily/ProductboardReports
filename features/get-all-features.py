@@ -29,7 +29,7 @@ def main():
         features_df = pd.DataFrame.from_dict(features_dict)
         all_features_df = pd.concat([all_features_df, features_df], ignore_index=True)
 
-
+        # Use the next_url to paginate through customers until next_url is empty (meaning we've fetch all customers)
         while next_url is not None:
             req_url = next_url
             response = requests.request("GET", req_url, headers=headers)
