@@ -47,7 +47,7 @@ def get_all_note(token):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="get-all-notes.py", description="Query ProductBoard for a list of all notes")
+    parser = argparse.ArgumentParser(prog="get_all_notes.py", description="Query ProductBoard for a list of all notes")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
     args = parser.parse_args()

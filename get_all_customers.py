@@ -45,7 +45,7 @@ def get_all_customers(token):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="get-all-customers.py", description="Query ProductBoard for a list of all customers")
+    parser = argparse.ArgumentParser(prog="get_all_customers.py", description="Query ProductBoard for a list of all customers")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
     args = parser.parse_args()
