@@ -5,6 +5,28 @@ import argparse
 import time
 
 
+def get_feature(token, feature_id):
+    # Get a single feature and return a dataframe of it
+    req_url = 'https://api.productboard.com/features/' + feature_id
+    headers = {
+        "X-Version": "1",
+        "Authorization": "Bearer " f"{token}"
+    }
+
+    feature_df = pd.DataFrame()  # set an initial empty dataframe
+    response = requests.request("GET", req_url, headers=headers)
+    if response.status_code == 200:
+        timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
+        print(timestamp + f": Feature list success {response}")
+        response = response.json()
+        feature_dict = response['data']
+        feature_df = pd.DataFrame(feature_dict, index=[0])
+    else:
+        print(response)
+
+    return feature_df
+
+
 def get_all_features(token):
     # Get all the features and return a dataframe of them
     req_url = 'https://api.productboard.com/features'
@@ -46,7 +68,7 @@ def get_all_features(token):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="get_all_features.py", description="Query ProductBoard for a list of all features")
+    parser = argparse.ArgumentParser(prog="features.py", description="Query ProductBoard for a list of all features")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
     args = parser.parse_args()

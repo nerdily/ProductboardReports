@@ -5,7 +5,7 @@ import argparse
 import time
 
 
-def get_all_note(token):
+def get_all_notes(token):
     # Get all the notes and return a dataframe of them
     req_url = 'https://api.productboard.com/notes?pageLimit=2000'
     headers = {
@@ -47,13 +47,13 @@ def get_all_note(token):
 
 
 def main():
-    parser = argparse.ArgumentParser(prog="get_all_notes.py", description="Query ProductBoard for a list of all notes")
+    parser = argparse.ArgumentParser(prog="notes.py", description="Query ProductBoard for a list of all notes")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
     args = parser.parse_args()
 
     # Set a dataframe name and fetch the notes, passing the authorization token
-    all_notes_df = get_all_note(args.token)
+    all_notes_df = get_all_notes(args.token)
 
     # Cool. Export the dataframe to a CSV. Everyone wants a CSV
     print("Done fetching notes")
