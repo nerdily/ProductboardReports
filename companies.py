@@ -24,6 +24,7 @@ def get_company(token, company_id):
     else:
         print(response)
 
+    company_df = company_df.rename(columns={"id": "company_id", "name": "company_name"})
     return company_df
 
 
@@ -62,7 +63,7 @@ def get_all_companies(token):
                 print(response)
     else:
         print(response)
-
+    all_companies_df = all_companies_df.rename(columns={"id": "company_id", "name": "company_name"})
     return all_companies_df
 
 

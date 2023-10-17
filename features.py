@@ -24,6 +24,7 @@ def get_feature(token, feature_id):
     else:
         print(response)
 
+    feature_df = feature_df.rename(columns={"id":"feature_id", "name":"feature_name", "type":"feature_type","status":"feature_status", "parent":"feature_parent"})
     return feature_df
 
 
@@ -34,9 +35,9 @@ def get_all_features(token):
         "X-Version": "1",
         "Authorization": "Bearer " f"{token}"
     }
-    all_features_df = pd.DataFrame()  # set an initial empty dataframe to append each customer data pull to
+    all_features_df = pd.DataFrame()  # set an initial empty dataframe to append each feature pull to
 
-    # Initial retrieval of customers
+    # Initial retrieval of features
     response = requests.request("GET", req_url, headers=headers)
     if response.status_code == 200:
         timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp
@@ -47,7 +48,7 @@ def get_all_features(token):
         features_df = pd.DataFrame.from_dict(features_dict)
         all_features_df = pd.concat([all_features_df, features_df], ignore_index=True)
 
-        # Use the next_url to paginate through customers until next_url is empty (meaning we've fetch all customers)
+        # Use the next_url to paginate through features until next_url is empty (meaning we've fetch all features)
         while next_url is not None:
             req_url = next_url
             response = requests.request("GET", req_url, headers=headers)
@@ -64,6 +65,7 @@ def get_all_features(token):
     else:
         print(response)
 
+    all_features_df = all_features_df.rename(columns={"id": "feature_id", "name":"feature_name", "type":"feature_type","status":"feature_status", "parent":"feature_parent"})
     return all_features_df
 
 
