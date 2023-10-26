@@ -44,6 +44,7 @@ def get_company_notes(token, company_id):
         print(response)
 
     all_company_notes_df = all_company_notes_df.rename(columns={"id": "note_id", "title": "note_title", "content":"note_content", "company":"note_company", "features":"note_linked_features"})
+    all_company_notes_df['note_content'] = all_company_notes_df['note_content'].str.replace(r'<[^<>]*>', '', regex=True)  # strip all HTML tags from the note_content field
     return all_company_notes_df
 
 
@@ -85,6 +86,7 @@ def get_all_notes(token):
         print(response)
 
     all_notes_df = all_notes_df.rename(columns={"id": "note_id", "title": "note_title", "content":"note_content"})
+    all_notes_df['note_content'] = all_notes_df['note_content'].str.replace(r'<[^<>]*>', '', regex=True)
     return all_notes_df
 
 
