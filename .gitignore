@@ -1,3 +1,6 @@
 /keys.txt
 *.csv
 */*.csv
+*.xlsx
+*/*.xlsx
+

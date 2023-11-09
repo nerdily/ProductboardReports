@@ -3,6 +3,7 @@ import requests
 import sys
 import argparse
 import time
+import json
 
 
 def get_all_products(token):
