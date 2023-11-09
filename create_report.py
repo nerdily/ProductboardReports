@@ -1,16 +1,11 @@
-# import numpy as np
 import pandas as pd
 import companies
 import features
 import notes
 import components
-# import products
-# import pandas
 import argparse
 import time
-# import openpyxl
 import sys
-import os
 
 
 def main():
@@ -89,9 +84,6 @@ def main():
 
     # Okay let's churn through each company and match up their feature requests!
     for i, row in all_companies_df.iterrows():
-        # debugging:
-        # company_id = '1d18dcc7-4957-4dde-8bed-133000a1c8eb'
-        # company_name = 'PT. Bank Rakyat Indonesia (BRI)'
 
         # Set a dataframe name and fetch all the notes for a single company
         company_id = all_companies_df.loc[i, 'company_id']
