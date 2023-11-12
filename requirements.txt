@@ -26,3 +26,4 @@ traitlets==5.13.0
 tzdata==2023.3
 urllib3==2.0.7
 wcwidth==0.2.9
+XlsxWriter==3.1.9
