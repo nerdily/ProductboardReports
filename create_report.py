@@ -91,7 +91,7 @@ def main():
         company_name = str(company_name).replace("/", "-")  # replace any forward slashes in company names with a -
         print("Working on " + company_name)
         company_notes_df = notes.get_company_notes(args.token, company_id)
-        company_notes_df = company_notes_df[['note_id', 'note_title', 'note_content', 'note_company', 'note_linked_features']]
+        company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_title', 'note_content', 'note_company', 'note_linked_features']]
         company_notes_df = company_notes_df.explode('note_linked_features', ignore_index=True)  # Flatten company notes as the 'note_linked_features' can have multiple entries.
         company_notes_df['note_linked_feature_type'] = ''  # Add column for linked feature type
         company_notes_df['note_linked_feature_id'] = ''  # Add column for linked feature ID
@@ -132,21 +132,22 @@ def main():
         # Join our features and subfeatures dataframes
         all_company_features_df = pd.concat([company_notes_features_df, company_notes_subfeatures_df], axis=0)
         all_company_features_df = all_company_features_df.drop(columns=["note_id"])
+        # Reset the index
         all_company_features_df = all_company_features_df.reset_index(drop=True)
+        # Rename our displayUrl column
+        all_company_features_df = all_company_features_df.rename(columns={"displayUrl": "noteURL"})
+
 
         # Export it!
         if all_company_features_df.shape[0] != 0:
             timestamp = time.strftime("%Y%m%d-%H%M%S")  # create a timestamp for our filename
-            xlwriter = pd.ExcelWriter('reports/' + company_name + '-' + timestamp + '.xlsx')
+            xlwriter = pd.ExcelWriter('reports/' + company_name + '-' + timestamp + '.xlsx', engine="xlsxwriter")
             all_company_features_df.to_excel(xlwriter, sheet_name="Feature Requests", index=False)
             status_df.to_excel(xlwriter, sheet_name="Status Explanations", index=False)
             xlwriter.close()
         else:
             print(company_name + " has no feature requests")
-
-
     print("Done")
-
 
 
 if __name__ == "__main__":
