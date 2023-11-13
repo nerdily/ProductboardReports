@@ -88,7 +88,8 @@ def main():
         # Set a dataframe name and fetch all the notes for a single company
         company_id = all_companies_df.loc[i, 'company_id']
         company_name = all_companies_df.loc[i, 'company_name']
-        company_name = str(company_name).replace("/", "-")  # replace any forward slashes in company names with a -
+        company_name = str(company_name).replace("/", "-")  # replace any forward slashes in company names with a dash - file paths use them
+        company_name = str(company_name).replace("?", "")   # remove any question mark characters - OneDrive can't use them
         print("Working on " + company_name)
         company_notes_df = notes.get_company_notes(args.token, company_id)
         company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_title', 'note_content', 'note_company', 'note_linked_features']]
