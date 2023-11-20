@@ -93,7 +93,7 @@ def main():
         company_name = str(company_name).replace("?", "")   # remove any question mark characters - OneDrive can't use them
         print("Working on " + company_name)
         company_notes_df = notes.get_company_notes(args.token, company_id)
-        company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_title', 'note_content', 'note_pm', 'note_company', 'note_linked_features']]
+        company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_created_date', 'note_title', 'note_content', 'note_pm', 'note_company', 'note_linked_features']]
         company_notes_df = company_notes_df.explode('note_linked_features', ignore_index=True)  # Flatten company notes as the 'note_linked_features' can have multiple entries.
         company_notes_df['note_linked_feature_type'] = ''  # Add column for linked feature type
         company_notes_df['note_linked_feature_id'] = ''  # Add column for linked feature ID
