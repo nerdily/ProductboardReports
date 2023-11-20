@@ -88,15 +88,17 @@ def main():
         # Set a dataframe name and fetch all the notes for a single company
         company_id = all_companies_df.loc[i, 'company_id']
         company_name = all_companies_df.loc[i, 'company_name']
+
         company_name = str(company_name).replace("/", "-")  # replace any forward slashes in company names with a dash - file paths use them
         company_name = str(company_name).replace("?", "")   # remove any question mark characters - OneDrive can't use them
         print("Working on " + company_name)
         company_notes_df = notes.get_company_notes(args.token, company_id)
-        company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_title', 'note_content', 'note_company', 'note_linked_features']]
+        company_notes_df = company_notes_df[['note_id', 'displayUrl', 'note_title', 'note_content', 'note_pm', 'note_company', 'note_linked_features']]
         company_notes_df = company_notes_df.explode('note_linked_features', ignore_index=True)  # Flatten company notes as the 'note_linked_features' can have multiple entries.
         company_notes_df['note_linked_feature_type'] = ''  # Add column for linked feature type
         company_notes_df['note_linked_feature_id'] = ''  # Add column for linked feature ID
         company_notes_df.dropna(axis=0, how='any', inplace=True)  # remove rows with no linked notes.
+        company_notes_df['note_pm'] = company_notes_df['note_pm'].apply(lambda y: y.get("name", "default-value"))  # Pull the note owner's name
         company_notes_df['note_linked_feature_type'] = company_notes_df['note_linked_features'].apply(lambda y: y.get("type", "default-value"))  # Pull linked feature type out.
         company_notes_df['note_linked_feature_id'] = company_notes_df['note_linked_features'].apply(lambda y: y.get("id", "default-value"))  # Pull linked feature ID out.
         company_notes_df.drop(columns={"note_company", "note_linked_features"}, inplace=True)  # Drop columns we don't need

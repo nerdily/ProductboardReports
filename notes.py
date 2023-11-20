@@ -43,10 +43,10 @@ def get_company_notes(token, company_id):
     else:
         print(response)
 
-    all_company_notes_df = all_company_notes_df.rename(columns={"id": "note_id", "title": "note_title", "content":"note_content", "company":"note_company", "features":"note_linked_features"})
+    all_company_notes_df = all_company_notes_df.rename(columns={"id": "note_id", "title": "note_title", "content":"note_content", "owner":"note_pm", "company":"note_company", "features":"note_linked_features"})
     # Account for the possibility that a company has no notes. Just create an empty dataframe
     if all_company_notes_df.shape[0] == 0:
-        all_company_notes_df = pd.DataFrame(columns=["note_id", 'displayUrl', "note_title", "note_content", "note_company", "note_linked_features"])  # Create an empty df if there's no notes for the company
+        all_company_notes_df = pd.DataFrame(columns=["note_id", 'displayUrl', "note_title", "note_content", "note_pm", "note_company", "note_linked_features"])  # Create an empty df if there's no notes for the company
     all_company_notes_df['note_content'] = all_company_notes_df['note_content'].str.replace(r'<[^<>]*>', '', regex=True)  # strip all HTML tags from the note_content field
     return all_company_notes_df
 
