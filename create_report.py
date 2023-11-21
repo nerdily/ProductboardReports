@@ -119,8 +119,8 @@ def main():
         company_notes_features_df = company_notes_features_df.reset_index(drop=True)
         company_notes_features_df = company_notes_features_df.merge(feature_hierarchy_df, how="left", left_on="note_linked_feature_id", right_on="feature_id")
         company_notes_features_df = company_notes_features_df.drop(columns={"note_linked_feature_id", "feature_id", "feature_type", "feature_parent_type"})
-        company_notes_features_df.insert(loc=4, column='subfeature_status', value='n/a')
-        company_notes_features_df.insert(loc=4, column='subfeature_name', value='n/a')
+        company_notes_features_df.insert(loc=6, column='subfeature_status', value='n/a')
+        company_notes_features_df.insert(loc=6, column='subfeature_name', value='n/a')
 
         # Notes linked directly to components:
         company_notes_components_df = company_notes_df.loc[company_notes_df['note_linked_feature_type'] == "component"]
