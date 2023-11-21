@@ -9,6 +9,10 @@ import sys
 
 
 def main():
+    # Logging:
+    timestamp = time.strftime("%Y%m%d-%H%M%S")
+    sys.stdout = open('reports/log-'+timestamp+'.txt', 'wt')  # Redirect all console (print etc) to a file for logging. Comment this out if you want console data instead.
+
     parser = argparse.ArgumentParser(prog="create_report.py", description="Query ProductBoard and create a feature request report")
     requiredNamed = parser.add_argument_group('required arguments')
     requiredNamed.add_argument("-t", "--token", required=True,help="JWT bearer token used for authentication")
