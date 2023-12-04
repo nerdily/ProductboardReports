@@ -27,7 +27,8 @@ def main():
                 ['Prioritized', "Our teams are hard at work investigating and designing. However, it’s still early and there’s a lot things that could change. Delivery timeframe uncertain at this time."],
                 ['In Progress', "We are actively developing this feature right now."],
                 ['Code Complete', "Coding work is complete and we are scheduling a ship date"],
-                ['Shipped', "Feature has been released"]]
+                ['Shipped', "Feature has been released"],
+                ['Blocked,' "A pre-requisite must be completed first before we could work on this request."]]
 
     # Create the pandas DataFrame
     status_df = pd.DataFrame(statuses, columns=['Status', 'Meaning'])
